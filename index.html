@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aditya - Developer Portfolio</title>
+    <link rel="icon" href="https://res.cloudinary.com/deoegf9on/image/upload/v1731435569/favicon_dmk9u2.ico"
+        type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +33,9 @@
 
         header {
             background-color: rgba(255, 255, 255, 0.1);
+            /* Semi-transparent background */
+            backdrop-filter: blur(10px);
+            /* Apply blur effect behind the header */
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
             padding: 20px 0;
             position: sticky;
@@ -45,6 +50,14 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        /* Hide the menu on smaller screens and show the hamburger icon */
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
         }
 
         /* Logo Styling */
@@ -93,25 +106,6 @@
             background-color: white;
             color: #ff4d4d;
             box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-            }
-
-            .right ul {
-                flex-direction: column;
-            }
-
-            .right ul li {
-                margin: 10px 0;
-            }
-
-            .left {
-                margin-bottom: 20px;
-            }
         }
 
         /* Hero Section */
@@ -165,23 +159,6 @@
             margin: 0 50px;
             border-radius: 10px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Media Queries for smaller screens */
-        @media (max-width: 992px) {
-            .firstSection {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .leftSection {
-                max-width: 100%;
-                margin-bottom: 30px;
-            }
-
-            .rightSection img {
-                margin: 0;
-            }
         }
 
         /* Skills Section */
@@ -402,6 +379,49 @@
         .socials i:hover {
             color: #ff4d4d;
         }
+
+        @media (max-width: 768px) {
+            nav {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .rightSection{
+                margin-right: 50px;
+            }
+
+            /* Hide the regular menu */
+            .right ul {
+                display: none;
+                flex-direction: column;
+                background-color: #001f3f;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 999;
+            }
+
+            .right ul li {
+                margin: 20px 0;
+                text-align: center;
+            }
+
+            /* Display the hamburger menu */
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            /* Show the menu when the toggle is clicked */
+            .right ul.active {
+                display: flex;
+            }
+        }
     </style>
 </head>
 
@@ -409,13 +429,16 @@
     <header>
         <nav>
             <div class="left">Aadi's Portfolio</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
             <div class="right">
-                <ul>
+                <ul class="menu-items">
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
-                    <li><a href="#">Projects</a></li>
+                    <li><a href="#portfolio">Projects</a></li>
                     <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact Me</a></li>
+                    <li><a href="#contact">Contact Me</a></li>
                 </ul>
             </div>
         </nav>
@@ -431,7 +454,8 @@
                 <button class="cta-button">Explore My Work</button>
             </div>
             <div class="rightSection">
-                <img src="https://res.cloudinary.com/deoegf9on/image/upload/v1731433867/programmer_wbubvr.png" alt="background image">
+                <img src="https://res.cloudinary.com/deoegf9on/image/upload/v1731433867/programmer_wbubvr.png"
+                    alt="background image">
             </div>
         </section>
     </main>
@@ -497,7 +521,10 @@
     <section id="resume">
         <h2>Resume</h2>
         <p>Download my resume to learn more about my skills and experience.</p>
-        <button id="downloadButton">Download Resume</button>
+        <a href="https://res.cloudinary.com/deoegf9on/image/upload/v1731436328/Resume_Aditya_2024_page-0001_3_giuyfb.jpg"
+            download>
+            <button id="downloadButton">Download Resume</button>
+        </a>
     </section>
 
 
@@ -522,6 +549,29 @@
                     class="fab fa-instagram"></i></a>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the hamburger toggle button and the menu
+            const menuToggle = document.querySelector('.menu-toggle');
+            const menu = document.querySelector('.right ul');
+
+            // Toggle the menu when the hamburger icon is clicked
+            menuToggle.addEventListener('click', function (event) {
+                menu.classList.toggle('active');
+                event.stopPropagation(); // Prevent the click from propagating to the document
+            });
+
+            // Collapse the menu when clicking outside of it
+            document.addEventListener('click', function (event) {
+                // Check if the menu is open and the click is outside the menu and the toggle button
+                if (menu.classList.contains('active') && !menu.contains(event.target) && !menuToggle.contains(event.target)) {
+                    menu.classList.remove('active');
+                }
+            });
+        });
+
+    </script>
 
 </body>
 
